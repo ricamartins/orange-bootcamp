@@ -24,6 +24,13 @@ public class TurmaRequest {
 	public Turma convert(Long id) {
 		return new Turma(id, nome, turno);
 	}
+
+	public String getNome() {
+		return nome;
+	}
 	
+	public String getTurno() {
+		return turno;
+	}
 	
 }

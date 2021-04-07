@@ -1,6 +1,7 @@
 package com.orange.bootcamp.controllers;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.orange.bootcamp.controllers.dto.TurmaRequest;
 import com.orange.bootcamp.controllers.dto.TurmaResponse;
+import com.orange.bootcamp.models.Turma;
 import com.orange.bootcamp.repositories.TurmaRepository;
 
 @RestController
@@ -42,8 +44,14 @@ public class TurmaController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<TurmaResponse> put(@PathVariable Long id, @RequestBody @Valid TurmaRequest request) {
-		TurmaResponse response = new TurmaResponse(repository.save(request.convert(id)));
-		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		Optional<Turma> opt = repository.findById(id);
+		if (opt.isEmpty()) return ResponseEntity.notFound().build();
+		
+		Turma turma = opt.get();
+		turma.setNome(request.getNome());
+		turma.setTurno(request.getTurno());
+		TurmaResponse response = new TurmaResponse(repository.save(turma));
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 	
 }

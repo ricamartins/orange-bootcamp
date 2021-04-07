@@ -23,7 +23,6 @@ public class Turma {
 	
 	private String turno;
 	
-	@CreationTimestamp
 	private LocalDateTime criadoEm = LocalDateTime.now();
 
 	public Turma() {}
@@ -53,6 +52,14 @@ public class Turma {
 
 	public LocalDateTime getCriadoEm() {
 		return criadoEm;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	public void setTurno(String turno) {
+		this.turno = turno;
 	}
 	
 }
